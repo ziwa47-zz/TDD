@@ -10,9 +10,9 @@ namespace TDDDay2Homework
         [TestMethod]
         public void Buy_HarrtPotter_1_0_0_0_0_And_TotalPrice_Must_Be_100()
         {
-            //arrange 
+            //arrange
             var target = new ShoppingCart();
-            var books = new List<Book>() { new Book {Id=1,Qty=1 } };
+            var books = new List<Book>() { new Book { Id = 1, Qty = 1 } };
 
             decimal expected = 100;
             //act
@@ -47,13 +47,16 @@ namespace TDDDay2Homework
 
         public int Qty { get; set; }
 
-        public decimal Price { get { return 100; } }
     }
 
     public class ShoppingCart : IShoppingCart
     {
+        private const decimal bookPrice = 100;
+        private Dictionary<int, decimal> _discount;
+
         public ShoppingCart()
         {
+            _discount = BuyBooksDiscount();
         }
 
         public Dictionary<int, decimal> BuyBooksDiscount()
@@ -66,13 +69,24 @@ namespace TDDDay2Homework
 
         public decimal Buy(List<Book> books)
         {
-            decimal amount = 0;
+            decimal totalAmount = 0;
+            decimal price = 0;
+            int bookAmount = 0;
+            int discountLevel = 0;
+
             foreach (var book in books)
             {
-                amount += book.Price * book.Qty;
+                if (book.Qty > discountLevel)
+                {
+                    bookAmount++;
+                }
             }
-            return amount;
-            
+            discountLevel += bookAmount;
+
+            totalAmount += _discount[discountLevel] * bookAmount * bookPrice;
+
+            return totalAmount;
+
         }
     }
 
