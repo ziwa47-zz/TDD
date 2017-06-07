@@ -41,9 +41,12 @@ namespace TDDDay2Homework
         {
             //arrange 
             var target = new ShoppingCart();
-            var books = new List<Book>() { new Book { Id = 1, Qty = 1 }, new Book { Id = 2, Qty = 1 } };
+            var books = new List<Book>() {
+                new Book { Id = 1, Qty = 1 },
+                new Book { Id = 2, Qty = 1 },
+                new Book { Id = 3, Qty = 1 }};
 
-            decimal expected = 190;
+            decimal expected = 270;
             //act
             decimal actual = target.Buy(books);
 
