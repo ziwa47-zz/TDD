@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TDDDay2Homework
 {
@@ -145,21 +146,28 @@ namespace TDDDay2Homework
         public decimal Buy(List<Book> books)
         {
             decimal totalAmount = 0;
-            decimal price = 0;
-            int bookAmount = 0;
             int discountLevel = 0;
+            int bookAmount = 0;
+            int bookIndex = 0;
 
-            foreach (var book in books)
+            do
             {
-                if (book.Qty > discountLevel)
+                discountLevel = 0;
+                bookAmount = 0;
+                foreach (var book in books)
                 {
-                    bookAmount++;
+
+                    if (book.Qty > bookIndex)
+                    {
+                        bookAmount++;
+                    }
                 }
-            }
-            discountLevel += bookAmount;
+                bookIndex++;
+                discountLevel += bookAmount;
 
-            totalAmount += _discount[discountLevel] * bookAmount * bookPrice;
+                totalAmount += _discount[discountLevel] * bookAmount * bookPrice;
 
+            } while (books.Max(r=>r.Qty)>bookIndex);
             return totalAmount;
 
         }
