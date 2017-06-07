@@ -134,6 +134,27 @@ namespace TDDDay2Homework
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void Buy_HarrtPotter_1_2_3_2_1_And_TotalPrice_Must_Be_745()
+        {
+            //arrange 
+            var target = new ShoppingCart();
+            var books = new List<Book>() {
+                new Book { Id = 1, Qty = 1 },
+                new Book { Id = 2, Qty = 2 },
+                new Book { Id = 3, Qty = 3 },
+                new Book { Id = 4, Qty = 2 },
+                new Book { Id = 5, Qty = 1 },
+            };
+
+            decimal expected = 745;
+            //act
+            decimal actual = target.Buy(books);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
 
     }
 
@@ -166,30 +187,21 @@ namespace TDDDay2Homework
         public decimal Buy(List<Book> books)
         {
             decimal totalAmount = 0;
-            int discountLevel = 0;
-            int bookAmount = 0;
             int bookIndex = 0;
-
             do
             {
-                discountLevel = 0;
-                bookAmount = 0;
-                foreach (var book in books)
-                {
+                int bookAmount = 0;
+                bookAmount += books.Where(r => r.Qty > bookIndex).Count();
+                totalAmount += GetTotal(bookAmount);
 
-                    if (book.Qty > bookIndex)
-                    {
-                        bookAmount++;
-                    }
-                }
-                bookIndex++;
-                discountLevel += bookAmount;
-
-                totalAmount += _discount[discountLevel] * bookAmount * bookPrice;
-
-            } while (books.Max(r=>r.Qty)>bookIndex);
+            } while (books.Max(r => r.Qty) > ++bookIndex);
             return totalAmount;
 
+        }
+
+        private decimal GetTotal(int bookAmount)
+        {
+            return _discount[bookAmount] * bookAmount * bookPrice;
         }
     }
 
