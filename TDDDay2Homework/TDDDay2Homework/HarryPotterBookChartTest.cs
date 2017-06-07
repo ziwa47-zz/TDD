@@ -72,7 +72,26 @@ namespace TDDDay2Homework
             //assert
             Assert.AreEqual(expected, actual);
         }
+        [TestMethod]
+        public void Buy_HarrtPotter_1_1_1_1_1_And_TotalPrice_Must_Be_375()
+        {
+            //arrange 
+            var target = new ShoppingCart();
+            var books = new List<Book>() {
+                new Book { Id = 1, Qty = 1 },
+                new Book { Id = 2, Qty = 1 },
+                new Book { Id = 3, Qty = 1 },
+                new Book { Id = 4, Qty = 1 },
+                new Book { Id = 5, Qty = 1 },
+            };
 
+            decimal expected = 375;
+            //act
+            decimal actual = target.Buy(books);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
 
 
     }
