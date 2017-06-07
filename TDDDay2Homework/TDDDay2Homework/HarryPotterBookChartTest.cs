@@ -166,7 +166,7 @@ namespace TDDDay2Homework
 
     }
 
-    public class ShoppingCart : IShoppingCart
+    public class ShoppingCart 
     {
         private const decimal bookPrice = 100;
         private Dictionary<int, decimal> _discount;
@@ -203,12 +203,5 @@ namespace TDDDay2Homework
         {
             return _discount[bookAmount] * bookAmount * bookPrice;
         }
-    }
-
-    public interface IShoppingCart
-    {
-        decimal Buy(List<Book> books);
-
-        Dictionary<int, decimal> BuyBooksDiscount();
     }
 }
