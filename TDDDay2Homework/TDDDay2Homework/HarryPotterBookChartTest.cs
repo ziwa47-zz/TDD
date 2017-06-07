@@ -12,85 +12,48 @@ namespace TDDDay2Homework
         public void Buy_HarrtPotter_1_0_0_0_0_And_TotalPrice_Must_Be_100()
         {
             //arrange 
-            var target = new List<int>() { 1, 0, 0, 0, 0 };
 
-            var expected = 100m;
+            var books = new List<Book>() { new Book {Id=1,Qty=1 } };
+            IShoppingCart _shoppingCart = new ShoppingCart();
+
+            decimal expected = 100;
             //act
-            var actual = GetDiscountPrice();
+            decimal actual = _shoppingCart.Buy(books);
 
             //assert
             Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
-        public void Buy_HarrtPotter_1_1_0_0_0_And_TotalPrice_Must_Be_190()
+       
+
+        private Dictionary<int, decimal> BuyBooksDiscount()
         {
-            //arrange 
-            var target = new List<int>() { 1, 1, 0, 0, 0 };
+            return new Dictionary<int, decimal>()
+                { {1,1m }, {2,0.95m }, {3,0.9m }, {4,0.8m }, { 5,0.75m} };
 
-            var expected = 190m;
-            //act
-            var actual = GetDiscountPrice();
-
-            //assert
-            Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
-        public void Buy_HarrtPotter_1_1_1_0_0_And_TotalPrice_Must_Be_270()
+    }
+
+    public class Book
+    {
+        public int Id { get; set; }
+
+        public int Qty { get; set; }
+    }
+
+    public class ShoppingCart : IShoppingCart
+    {
+        public ShoppingCart()
         {
-            //arrange 
-            var target = new List<int>() { 1, 1, 1, 0, 0 };
-
-            var expected = 270m;
-            //act
-            var actual = GetDiscountPrice();
-
-            //assert
-            Assert.AreEqual(expected, actual);
-        }
-        [TestMethod]
-        public void Buy_HarrtPotter_1_1_1_1_0_And_TotalPrice_Must_Be_375()
-        {
-            //arrange 
-            var target = new List<int>() { 1, 1, 1, 1, 0 };
-
-            var expected = 375m;
-            //act
-            var actual = GetDiscountPrice();
-
-            //assert
-            Assert.AreEqual(expected, actual);
-        }
-        [TestMethod]
-        public void Buy_HarrtPotter_1_1_2_0_0_And_TotalPrice_Must_Be_370()
-        {
-            //arrange 
-            var target = new List<int>() { 1, 1, 2, 0, 0 };
-
-            var expected = 370m;
-            //act
-            var actual = GetDiscountPrice();
-
-            //assert
-            Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        public void Buy_HarrtPotter_1_2_2_0_0_And_TotalPrice_Must_Be_460()
-        {
-            //arrange 
-            var target = new List<int>() { 1, 2, 2, 0, 0 };
-
-            var expected = 460m;
-            //act
-            var actual = GetDiscountPrice();
-
-            //assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        private decimal GetDiscountPrice()
+        public decimal Buy(List<Book> books)
         {
             throw new NotImplementedException();
         }
+    }
+
+    public interface IShoppingCart
+    {
+        decimal Buy(List<Book> books);
     }
 }
