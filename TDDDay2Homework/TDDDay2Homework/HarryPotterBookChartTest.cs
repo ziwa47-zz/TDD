@@ -23,7 +23,7 @@ namespace TDDDay2Homework
         }
 
         [TestMethod]
-        public void Buy_HarrtPotter_1_1_0_0_0_And_TotalPrice_Must_Be_100()
+        public void Buy_HarrtPotter_1_1_0_0_0_And_TotalPrice_Must_Be_190()
         {
             //arrange 
             var target = new ShoppingCart();
@@ -37,7 +37,7 @@ namespace TDDDay2Homework
             Assert.AreEqual(expected, actual);
         }
         [TestMethod]
-        public void Buy_HarrtPotter_1_1_1_0_0_And_TotalPrice_Must_Be_100()
+        public void Buy_HarrtPotter_1_1_1_0_0_And_TotalPrice_Must_Be_270()
         {
             //arrange 
             var target = new ShoppingCart();
@@ -47,6 +47,25 @@ namespace TDDDay2Homework
                 new Book { Id = 3, Qty = 1 }};
 
             decimal expected = 270;
+            //act
+            decimal actual = target.Buy(books);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void Buy_HarrtPotter_1_1_1_1_0_And_TotalPrice_Must_Be_320()
+        {
+            //arrange 
+            var target = new ShoppingCart();
+            var books = new List<Book>() {
+                new Book { Id = 1, Qty = 1 },
+                new Book { Id = 2, Qty = 1 },
+                new Book { Id = 3, Qty = 1 },
+                new Book { Id = 4, Qty = 1 }
+            };
+
+            decimal expected = 320;
             //act
             decimal actual = target.Buy(books);
 
