@@ -155,6 +155,27 @@ namespace TDDDay2Homework
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void Buy_HarrtPotter_0_0_0_0_0_And_TotalPrice_Must_Be_0()
+        {
+            //arrange 
+            var target = new ShoppingCart();
+            var books = new List<Book>() {
+                new Book { Id = 1, Qty = 0 },
+                new Book { Id = 2, Qty = 0 },
+                new Book { Id=  3, Qty = 0 },
+                new Book { Id = 4, Qty = 0 },
+                new Book { Id = 5, Qty = 0 },
+            };
+
+            decimal expected = 0;
+            //act
+            decimal actual = target.Buy(books);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
 
     }
 
@@ -179,8 +200,8 @@ namespace TDDDay2Homework
         public Dictionary<int, decimal> BuyBooksDiscount()
         {
             return new Dictionary<int, decimal>()
-                { {1,1m }, {2,0.95m }, {3,0.9m }, {4,0.8m }, { 5,0.75m} };
-
+                { {0,0m }, {1,1m }, {2,0.95m }, {3,0.9m }, {4,0.8m }, { 5,0.75m} };
+            
         }
 
 
@@ -188,15 +209,18 @@ namespace TDDDay2Homework
         {
             decimal totalAmount = 0;
             int bookIndex = 0;
+
             do
             {
-                int bookAmount = 0;
-                bookAmount += books.Where(r => r.Qty > bookIndex).Count();
-                totalAmount += GetTotal(bookAmount);
-
+                totalAmount += GetTotal(GetDiscountSet(books, bookIndex));
             } while (books.Max(r => r.Qty) > ++bookIndex);
             return totalAmount;
 
+        }
+
+        private static int GetDiscountSet(List<Book> books, int bookIndex)
+        {
+            return books.Where(r => r.Qty > bookIndex).Count();
         }
 
         private decimal GetTotal(int bookAmount)
